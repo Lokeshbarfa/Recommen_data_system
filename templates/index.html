@@ -1,0 +1,104 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <title>Dataset Recommendation</title>
+    <style>
+        body {
+            font-family: 'Segoe UI', Tahoma, Geneva, Verdana, sans-serif;
+            background-color: #f0f4f8;
+            margin: 0;
+            padding: 0;
+        }
+        .header {
+            background: linear-gradient(90deg, #004080, #0066cc);
+            color: white;
+            padding: 30px 20px;
+            text-align: center;
+        }
+        .header h1 {
+            font-size: 2.5em;
+            margin: 0;
+        }
+        .container {
+            max-width: 900px;
+            margin: 40px auto;
+            background: white;
+            padding: 40px;
+            border-radius: 10px;
+            box-shadow: 0 0 12px rgba(0,0,0,0.08);
+        }
+        form {
+            display: flex;
+            gap: 10px;
+            margin-bottom: 30px;
+        }
+        input[type="text"] {
+            flex: 1;
+            padding: 12px;
+            font-size: 16px;
+            border: 1px solid #ccc;
+            border-radius: 6px;
+        }
+        button {
+            padding: 12px 24px;
+            background-color: #0066cc;
+            color: white;
+            border: none;
+            border-radius: 6px;
+            font-size: 16px;
+            cursor: pointer;
+        }
+        button:hover {
+            background-color: #004d99;
+        }
+        .result-card {
+            background-color: #eaf3ff;
+            border: 1px solid #cce0f5;
+            padding: 20px;
+            border-radius: 8px;
+            margin-bottom: 15px;
+        }
+        .footer {
+            text-align: center;
+            padding: 20px;
+            color: #888;
+            font-size: 14px;
+        }
+    </style>
+</head>
+<body>
+
+    <div class="header">
+        <h1>📊 Dataset Recommendation System</h1>
+        <p>Find the best datasets using AI</p>
+    </div>
+
+    <div class="container">
+        <form method="POST" action="/recommend">
+            <input type="text" name="project_info" placeholder="Search dataset topic..." required>
+            <button type="submit">Search</button>
+        </form>
+
+        {% if results %}
+            <h3>Top Recommended Datasets for: "{{ query }}"</h3>
+            {% for item in results %}
+                <div class="result-card">
+                    <strong>{{ item.Dataset_name }}</strong> <br>
+                    👤 Author: {{ item.Author_name }} <br>
+                    📂 Type: {{ item.Type_of_file }} | ⭐ Usability: {{ item.Usability }}<br>
+                    👍 Upvotes: {{ item.Upvotes }} | 🏅 Medals: {{ item.Medals }}<br>
+                    🔗 <a href="{{ item.Dataset_link }}" target="_blank">Open Dataset</a>
+                </div>
+            {% endfor %}
+        {% elif query %}
+            <p>⚠️ No datasets found for "<strong>{{ query }}</strong>"</p>
+        {% endif %}
+    </div>
+
+    <div class="footer">
+        © 2025 • Designed by Lokesh Barfa • Flask Powered
+    </div>
+
+</body>
+</html>
